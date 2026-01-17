@@ -229,6 +229,36 @@ a:hover { text-decoration: underline; }
   h2 { margin-top: 1.0rem; }
 }
 
+/* =========================
+   Blog (notes) link polish
+========================= */
+
+/* 研究メモのカード見出しリンク：青や下線をやめて、押せそうにする */
+.card h2 a {
+  color: #111827;            /* 落ち着いた濃いグレー */
+  text-decoration: none;     /* 常時下線なし */
+  transition: color 0.2s ease;
+}
+
+/* カード自体がホバーで浮く（クリックできる感） */
+.card {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+}
+
+/* ホバー時だけ「リンクだ」と分かる */
+.card h2 a:hover {
+  color: #2563eb;            /* ホバーでだけ青寄り */
+  text-decoration: underline; /* 下線はhover時だけ */
+}
+
+/* 長いリンクも崩れない（保険） */
+.card h2 a { word-break: break-word; }
+
 
 /* =========================
    Responsive (mobile)
