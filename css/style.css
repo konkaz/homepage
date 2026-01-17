@@ -150,6 +150,30 @@ body {
   text-underline-offset: 2px;
 }
 
+/* Publication 3-line layout */
+.pub-authors {
+  font-weight: 600;
+  margin-bottom: 0.1rem;
+}
+
+.pub-title {
+  margin-left: 0.5rem;
+  margin-bottom: 0.1rem;
+}
+
+.pub-meta {
+  margin-left: 0.5rem;
+  font-size: 0.9em;
+  color: #4b5563;
+}
+
+/* underline for own name */
+.author.me {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+}
+
 
 /* =========================
    Responsive (mobile)
