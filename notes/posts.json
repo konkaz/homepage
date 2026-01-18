@@ -4,12 +4,13 @@
     "title": "ホームページ開設",
     "url": "notes/20260117.html",
     "excerpt": "ホームページの開設記録と、生成AI時代の雑感"
+    "tags": ["website", "log"]
   },
   {
     "date": "2026-01-18",
     "title": "WEPPの解説記事",
     "url": "20260118.html",
     "excerpt": "WEPPの使い方解説を作っていきます",
-    "tags": ["website", "log"]
+    "tags": ["website", "log", "WEPP"]
   }
 ]
