@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>0. はじめに（WEPPの概要）｜WEPPの使い方</title>
+  <meta name="description" content="【研究室向け】WEPP（Water Erosion Prediction Project）の概要。何を計算するモデルか、入力4本柱、圃場（hillslope）から理解するための基本。" />
+
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+
+<body>
+  <nav class="nav" aria-label="サイト内ナビゲーション">
+    <a href="../index.html">Home</a>
+    <a href="../cv.html">経歴</a>
+    <a href="../publications.html">業績</a>
+    <a href="../notes/">ブログ風</a>
+    <a href="../other.html">その他</a>
+  </nav>
+
+  <header class="header">
+    <h1>0. はじめに（WEPPの概要）</h1>
+    <p>このチュートリアルは「圃場版WEPPを自力で動かす」ことから始めます。</p>
+  </header>
+
+  <main class="container">
+    <p class="sub" style="margin-top: 0.75rem;">
+      <a href="../index.html">Home</a> /
+      <a href="../other.html">その他</a> /
+      <a href="./index.html">WEPPの使い方</a> /
+      0. はじめに（WEPPの概要）
+    </p>
+
+    <!-- 5 steps reminder -->
+    <section class="card">
+      <h2 class="h2-tight">このページの位置づけ（5段階のステップ0）</h2>
+      <p class="sub">
+        WEPP使い方は以下の5段階で整理します。<br>
+        このページは <strong>0. はじめに（WEPPの概要）</strong>です。
+      </p>
+      <ul class="simple">
+        <li><strong>0.</strong> はじめに（WEPPの概要）</li>
+        <li>1. 圃場版WEPPの動かし方（まず動かす）</li>
+        <li>2. 入力データ（Climate / Soil / Management / Topography）</li>
+        <li>3. 作業の流れ（研究室での標準手順）</li>
+        <li>4. 出力の見方（最低限）</li>
+      </ul>
+    </section>
+
+    <!-- What is WEPP -->
+    <section class="card">
+      <h2 class="h2-tight">WEPPとは何か（1分で）</h2>
+      <p>
+        <strong>WEPP（Water Erosion Prediction Project）</strong>は、
+        <strong>降雨</strong>と<strong>地形</strong>と<strong>土壌</strong>と<strong>土地管理</strong>の情報をもとに、
+        <strong>水による土壌侵食（erosion）と流出（runoff）</strong>を計算するモデルです。
+      </p>
+      <p>
+        特徴は、単なる経験式ではなく、
+        <strong>降雨 → 流出 → 侵食 → 輸送 → 堆積</strong>という過程を、条件に応じて追いかける点です。
+      </p>
+      <p class="sub">
+        まずは<strong>圃場（hillslope）</strong>で理解し、そこから流域・広域へ拡張します。
+      </p>
+    </section>
+
+    <!-- Why hillslope first -->
+    <section class="card">
+      <h2 class="h2-tight">なぜ「圃場版（hillslope）」から始めるのか</h2>
+      <ul class="simple">
+        <li>入力が少なく、原因切り分けがしやすい（最短で動く）</li>
+        <li>結果を決める要因（気象・土壌・管理・地形）を理解しやすい</li>
+        <li>流域（GeoWEPP等）に進んでも「何が効いているか」を見失いにくい</li>
+      </ul>
+      <p class="sub">
+        逆に、いきなり流域解析へ行くと、地形処理・パラメータ・出力の情報量が増え、
+        「どこで結果が決まったのか」が分からなくなりがちです。
+      </p>
+    </section>
+
+    <!-- Inputs -->
+    <section class="card">
+      <h2 class="h2-tight">WEPPの入力（4本柱）</h2>
+      <p class="sub">
+        WEPPの挙動は、ほぼ次の4つで決まります。ここがWEPP解析の核心です。
+      </p>
+
+      <h3>Climate（気象）</h3>
+      <ul class="simple">
+        <li>いつ・どれだけ降るか（強さ、継続時間、頻度）</li>
+        <li>イベント解析と長期解析で“適切な入力”が変わる</li>
+      </ul>
+
+      <h3>Soil（土壌）</h3>
+      <ul class="simple">
+        <li>削れやすさ・浸透しやすさ・構造など（土壌物性）</li>
+        <li>土壌の仮定が結果に強く出る（推定根拠を残すのが重要）</li>
+      </ul>
+
+      <h3>Management（管理）</h3>
+      <ul class="simple">
+        <li>作物、耕うん、被覆、残渣（人間が変える要因）</li>
+        <li>「いつ何をしたか」で侵食量が大きく変わる</li>
+      </ul>
+
+      <h3>Topography（地形）</h3>
+      <ul class="simple">
+        <li>斜面長・勾配・区間分割（流れ方の骨格）</li>
+        <li>地形の粗さは、過大評価/過小評価の原因になり得る</li>
+      </ul>
+
+      <p class="sub">
+        次のステップ（1・2）では、この4本柱を「最小構成で揃える→必要に応じて精密化する」
+        という考え方で進めます。
+      </p>
+    </section>
+
+    <!-- Processes -->
+    <section class="card">
+      <h2 class="h2-tight">WEPPが見ている侵食過程（ざっくり）</h2>
+      <ul class="simple">
+        <li><strong>Interrill（インターリル）：</strong>面状流（シートフロー）による剥離・輸送</li>
+        <li><strong>Rill（リル）：</strong>集中流による溝（リル）侵食</li>
+        <li><strong>Deposition（堆積）：</strong>輸送能力が落ちた場所で堆積</li>
+      </ul>
+      <p class="sub">
+        重要なのは、WEPPが「侵食量」だけでなく、<strong>どの過程が支配的か</strong>を示せる点です。
+        出力の解釈（ステップ4）で効いてきます。
+      </p>
+    </section>
+
+    <!-- Outputs -->
+    <section class="card">
+      <h2 class="h2-tight">WEPPの出力（何が分かるか）</h2>
+      <ul class="simple">
+        <li><strong>流出量（runoff）</strong></li>
+        <li><strong>侵食量（erosion）</strong>：インターリル／リル／合計 など</li>
+        <li>斜面内の侵食・堆積の分布（設定に依存）</li>
+        <li>期間合計・イベントごとの集計</li>
+      </ul>
+      <p class="sub">
+        まずは「値が出る」よりも「挙動の方向が妥当か（被覆で減る、勾配で増える等）」を確認するのが安全です。
+      </p>
+    </section>
+
+    <!-- Common misunderstandings -->
+    <section class="card">
+      <h2 class="h2-tight">よくある誤解（先に防ぐ）</h2>
+      <ul class="simple">
+        <li>WEPPの出力は“正解”ではなく、<strong>仮定に基づく予測</strong></li>
+        <li>入力の不確実性（特に土壌・管理）が結果に大きく乗る</li>
+        <li>「出力の数字」だけ見ると危険。<strong>水収支と過程</strong>も見る</li>
+      </ul>
+    </section>
+
+    <!-- Next -->
+    <section class="card">
+      <h2 class="h2-tight">次に読む</h2>
+      <ul class="simple">
+        <li><a href="getting_started.html">1. 圃場版WEPPの動かし方（まず動かす）</a></li>
+        <li><a href="inputs.html">2. 入力データ（4本柱）</a></li>
+      </ul>
+      <p class="sub"><a href="./index.html">← WEPP使い方トップへ戻る</a></p>
+    </section>
+  </main>
+
+  <footer class="footer">© 2026</footer>
+</body>
+</html>
