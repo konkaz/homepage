@@ -1,0 +1,203 @@
+---
+layout: default
+title: "ブログ風｜こんどうかずきの部屋"
+description: "ブログ風メモ。研究の進捗・作業ログ・記録。"
+header_lead: "研究の進捗、作業ログ、メモなど"
+---
+
+<section class="card">
+  <h2>記事一覧</h2>
+
+  <!-- controls -->
+  <div class="notes-controls">
+    <input
+      id="search"
+      type="search"
+      placeholder="検索（タイトル / 要約 / タグ）"
+      class="notes-search"
+    />
+    <div id="status" class="sub notes-status"></div>
+  </div>
+
+  <!-- tag chips -->
+  <div id="tags" class="notes-tags"></div>
+
+  <!-- posts -->
+  <div id="posts">
+    <p class="sub">読み込み中…</p>
+  </div>
+
+  <noscript>
+    <p class="sub">
+      JavaScriptが無効のため一覧を生成できません。posts.json を有効にするには JavaScript をONにしてください。
+    </p>
+  </noscript>
+</section>
+
+<script>
+  const postsBox = document.getElementById("posts");
+  const tagsBox = document.getElementById("tags");
+  const searchInput = document.getElementById("search");
+  const statusBox = document.getElementById("status");
+
+  let ALL_POSTS = [];
+  let ACTIVE_TAG = null;
+
+  function toTime(dateStr) {
+    const t = Date.parse(dateStr);
+    return Number.isFinite(t) ? t : 0;
+  }
+
+  function safeText(v) {
+    return (v === null || v === undefined) ? "" : String(v);
+  }
+
+  function normalizeUrl(url) {
+    // notes配下なので "notes/xxxx.html" でも "xxxx.html" でも吸収
+    return safeText(url).replace(/^notes\//, "");
+  }
+
+  function getYear(dateStr) {
+    const m = safeText(dateStr).match(/^(\d{4})/);
+    return m ? m[1] : "Unknown";
+  }
+
+  function collectTags(posts) {
+    const s = new Set();
+    posts.forEach(p => (p.tags || []).forEach(t => s.add(t)));
+    return Array.from(s).sort((a,b) => a.localeCompare(b, "ja"));
+  }
+
+  function renderTags(allTags) {
+    tagsBox.innerHTML = "";
+
+    function chip(label, tagValue) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.textContent = label;
+      b.className = "tag-chip" + ((ACTIVE_TAG === tagValue) ? " active" : "");
+      b.addEventListener("click", () => {
+        ACTIVE_TAG = (ACTIVE_TAG === tagValue) ? null : tagValue;
+        renderTags(allTags);
+        render();
+      });
+      return b;
+    }
+
+    tagsBox.appendChild(chip("すべて", null));
+    allTags.forEach(t => tagsBox.appendChild(chip(t, t)));
+  }
+
+  function filterPosts(posts) {
+    const key = safeText(searchInput.value).trim().toLowerCase();
+
+    return posts.filter(p => {
+      const title = safeText(p.title).toLowerCase();
+      const excerpt = safeText(p.excerpt).toLowerCase();
+      const tags = (p.tags || []).map(x => safeText(x).toLowerCase()).join(" ");
+
+      const hitKeyword = !key || (title + " " + excerpt + " " + tags).includes(key);
+      const hitTag = !ACTIVE_TAG || (p.tags || []).includes(ACTIVE_TAG);
+
+      return hitKeyword && hitTag;
+    });
+  }
+
+  function postItem(p) {
+    const article = document.createElement("article");
+    article.className = "post-item";
+
+    const h3 = document.createElement("h3");
+    h3.className = "post-title";
+
+    const a = document.createElement("a");
+    a.href = normalizeUrl(p.url);
+    a.textContent = safeText(p.title) || "(no title)";
+    h3.appendChild(a);
+
+    const meta = document.createElement("p");
+    meta.className = "sub";
+    const tagText = (p.tags && p.tags.length) ? " / " + p.tags.join(", ") : "";
+    meta.textContent = safeText(p.date) + tagText;
+
+    article.appendChild(h3);
+    article.appendChild(meta);
+
+    if (p.excerpt) {
+      const ex = document.createElement("p");
+      ex.className = "post-excerpt";
+      ex.textContent = safeText(p.excerpt);
+      article.appendChild(ex);
+    }
+
+    return article;
+  }
+
+  function render() {
+    const filtered = filterPosts(ALL_POSTS);
+
+    const key = safeText(searchInput.value).trim();
+    const tagInfo = ACTIVE_TAG ? ` / tag: ${ACTIVE_TAG}` : "";
+    statusBox.textContent =
+      `全 ${ALL_POSTS.length} 件` +
+      (filtered.length !== ALL_POSTS.length ? ` → 表示 ${filtered.length} 件` : "") +
+      (key ? ` / 検索: "${key}"` : "") +
+      tagInfo;
+
+    postsBox.innerHTML = "";
+
+    if (filtered.length === 0) {
+      const p = document.createElement("p");
+      p.className = "sub";
+      p.textContent = "該当する記事がありません。";
+      postsBox.appendChild(p);
+      return;
+    }
+
+    let currentYear = null;
+    filtered.forEach(p => {
+      const y = getYear(p.date);
+      if (y !== currentYear) {
+        currentYear = y;
+        const h = document.createElement("h2");
+        h.textContent = currentYear;
+        h.className = "notes-year";
+        postsBox.appendChild(h);
+      }
+      postsBox.appendChild(postItem(p));
+    });
+  }
+
+  (async () => {
+    try {
+      const res = await fetch("{{ '/notes/posts.json' | relative_url }}", { cache: "no-store" });
+      if (!res.ok) throw new Error("posts.json not found");
+
+      const posts = await res.json();
+      if (!Array.isArray(posts)) throw new Error("posts.json format invalid");
+
+      posts.forEach(p => {
+        if (!p.tags) p.tags = [];
+        p.url = normalizeUrl(p.url);
+      });
+      posts.sort((a, b) => toTime(b.date) - toTime(a.date));
+
+      ALL_POSTS = posts;
+
+      const allTags = collectTags(ALL_POSTS);
+      renderTags(allTags);
+
+      render();
+      searchInput.addEventListener("input", render);
+
+    } catch (e) {
+      postsBox.innerHTML = "";
+      tagsBox.innerHTML = "";
+      statusBox.textContent = "";
+      const p = document.createElement("p");
+      p.className = "sub";
+      p.textContent = "読み込みに失敗しました（/notes/posts.json を確認してください）。";
+      postsBox.appendChild(p);
+    }
+  })();
+</script>
