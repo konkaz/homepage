@@ -397,6 +397,12 @@ h2 {
   line-height: 1.4;
 }
 
+.card-link-image.wepp-hero img {
+  max-height: 280px;          /* ← ここが効く */
+  object-fit: cover;          /* はみ出しをトリミング */
+  object-position: center;    /* 中央基準 */
+}
+
 /* =========================
    Responsive (mobile)
 ========================= */
