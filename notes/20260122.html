@@ -1,0 +1,50 @@
+---
+layout: default
+title: "WEPPの解説｜ブログ風｜こんどうかずきの部屋"
+description: "d4PDFをWEPPに"
+og_title: "d4PDF"
+og_description: "d4PDFをWEPPでどうやって使おうか…"
+header_lead: ""
+---
+
+<p class="sub breadcrumb">
+  <a href="{{ '/' | relative_url }}">Home</a> /
+  <a href="{{ '/notes/' | relative_url }}">ブログ風</a> /
+  d4PDFをWEPPに
+</p>
+
+<header class="post-header">
+  <h1 class="post-h1">d4PDFをWEPPに</h1>
+  <p class="sub post-meta">
+    公開日：2026-01-22
+    <span class="sep">/</span>
+    最終更新：2026-01-22
+    <span class="sep">/</span>
+    タグ：
+    <a href="{{ '/notes/?tag=website' | relative_url }}">website</a>,
+    <a href="{{ '/notes/?tag=log' | relative_url }}">log</a>
+  </p>
+</header>
+
+<section class="card">
+  <p>
+  栃木県付近のアメダス地点相当のd4PDFの1時間降水量データを入手しました。これを使ってWEPPで土壌侵食量の将来予測をお試しでやってみようかと思ってます。
+  </p>
+
+  <p>
+   ひとまず、データがどういう傾向なのか見るために、実験別(4K上昇、2K上昇、過去)、SST別でGEV分布に当てはめて○年確率を求めて、それに適合するイベントを抜き出し…みたいなイメージでやってるところです。
+  <br>というよりは、長期間のデータがあるので統計データからCLIGENルートもあるし、せっかくの時系列データを活かしたBPCDGルートもあるし、今やってる方向性でも悪くはないし、、、悩ましいところですが、いろいろ試してみたいと思います。
+  </p>
+
+</section>
+
+<section class="card card-tight" id="post-nav">
+  <h2 class="h2-tight">記事ナビ</h2>
+  <ul class="simple">
+    <li id="prev-item">← 前の記事：<span class="sub">（読み込み中）</span></li>
+    <li id="next-item">次の記事 →：<span class="sub">（読み込み中）</span></li>
+    <li>一覧に戻る：<a href="{{ '/notes/' | relative_url }}">ブログ風トップ</a></li>
+  </ul>
+</section>
+
+<script src="{{ '/notes/post-nav.js' | relative_url }}"></script>
