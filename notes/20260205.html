@@ -57,31 +57,19 @@ header_lead: ""
 
 <script>
 (() => {
-  const NAMESPACE = "konkaz-homepage"; // 固有。変えてOK（英数と-推奨）
+  const NAMESPACE = "konkaz-homepage";
 
-  async function apiGetOrZero(key) {
-    const url = `https://api.countapi.xyz/get/${NAMESPACE}/${encodeURIComponent(key)}`;
-    const res = await fetch(url);
-    if (!res.ok) return 0; // 未作成などは0扱い
-    const data = await res.json();
-    return Number.isFinite(data.value) ? data.value : 0;
+  async function fetchJson(url) {
+    const res = await fetch(url, { cache: "no-store" });
+    const text = await res.text();
+    if (!res.ok) throw new Error(`${res.status} ${text.slice(0,120)}`);
+    try { return JSON.parse(text); } catch { throw new Error(`bad json: ${text.slice(0,120)}`); }
   }
 
-  async function apiHit(key) {
-    const url = `https://api.countapi.xyz/hit/${NAMESPACE}/${encodeURIComponent(key)}`;
-    const res = await fetch(url);
-    if (!res.ok) throw new Error("hit failed");
-    const data = await res.json();
-    return Number.isFinite(data.value) ? data.value : 0;
-  }
-
-  // DOMが確実に揃ってから動かす（レイアウトやscript位置変更にも強い）
   window.addEventListener("DOMContentLoaded", async () => {
     const boxes = document.querySelectorAll(".like[data-like-id]");
     for (const box of boxes) {
       const id = box.getAttribute("data-like-id");
-      if (!id) continue;
-
       const key = `like:${id}`;
       const storageKey = `liked:${id}`;
 
@@ -89,16 +77,22 @@ header_lead: ""
       const countEl = box.querySelector(".like-count");
       const msgEl = box.querySelector(".like-msg");
 
-      if (!btn || !countEl || !msgEl) continue;
-
-      // 初期表示（未作成でも0）
-      countEl.textContent = await apiGetOrZero(key);
+      // 初期表示
+      try {
+        const url = `https://api.countapi.xyz/get/${NAMESPACE}/${encodeURIComponent(key)}`;
+        const data = await fetchJson(url);
+        countEl.textContent = (data.value ?? 0);
+        msgEl.textContent = "";
+      } catch (e) {
+        countEl.textContent = "?";
+        msgEl.textContent = String(e).slice(0, 60);
+      }
 
       // 既に押してたら無効化
       if (localStorage.getItem(storageKey) === "1") {
         btn.disabled = true;
         btn.style.opacity = "0.6";
-        msgEl.textContent = "Thanks!";
+        msgEl.textContent = msgEl.textContent || "Thanks!";
         continue;
       }
 
@@ -106,14 +100,15 @@ header_lead: ""
         btn.disabled = true;
         btn.style.opacity = "0.6";
         try {
-          const newCount = await apiHit(key);
-          countEl.textContent = newCount;
+          const url = `https://api.countapi.xyz/hit/${NAMESPACE}/${encodeURIComponent(key)}`;
+          const data = await fetchJson(url);
+          countEl.textContent = (data.value ?? 0);
           localStorage.setItem(storageKey, "1");
           msgEl.textContent = "Thanks!";
-        } catch {
+        } catch (e) {
           btn.disabled = false;
           btn.style.opacity = "1";
-          msgEl.textContent = "Failed";
+          msgEl.textContent = String(e).slice(0, 60);
         }
       });
     }
