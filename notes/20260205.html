@@ -1,0 +1,50 @@
+---
+layout: default
+title: "いいねボタンを実装｜ブログ風｜こんどうかずきの部屋"
+description: "リクエストにお応えして。"
+og_title: "いいねボタンを実装"
+og_description: "リクエストに応えて、いいねボタンを。"
+header_lead: ""
+---
+
+<p class="sub breadcrumb">
+  <a href="{{ '/' | relative_url }}">Home</a> /
+  <a href="{{ '/notes/' | relative_url }}">ブログ風</a> /
+  いいねボタン
+</p>
+
+<header class="post-header">
+  <h1 class="post-h1">いいねボタン</h1>
+  <p class="sub post-meta">
+    公開日：2026-02-05
+    <span class="sep">/</span>
+    最終更新：2026-02-05
+    <span class="sep">/</span>
+    タグ：
+    <a href="{{ '/notes/?tag=log' | relative_url }}">log</a>
+  </p>
+</header>
+
+<section class="card">
+
+  <p>
+  ここ数日は実験だったり卒論・修論指導で忙しくしております。私自身も様々な報告書の作成に追われて、これぞ年度末といった感じです。
+  </p>
+　
+  <p>
+  さてと、本日はリクエストを受けて、いいねボタンの実装に取り組んでみました。
+<br>できてますかね？よければ押してみてください。
+  </p>
+
+</section>
+
+<section class="card card-tight" id="post-nav">
+  <h2 class="h2-tight">記事ナビ</h2>
+  <ul class="simple">
+    <li id="prev-item">← 前の記事：<span class="sub">（読み込み中）</span></li>
+    <li id="next-item">次の記事 →：<span class="sub">（読み込み中）</span></li>
+    <li>一覧に戻る：<a href="{{ '/notes/' | relative_url }}">ブログ風トップ</a></li>
+  </ul>
+</section>
+
+<script src="{{ '/notes/post-nav.js' | relative_url }}"></script>
