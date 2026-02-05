@@ -38,6 +38,11 @@ header_lead: ""
 
 </section>
 
+<div class="like" data-like-id="2026-02-05-post1">
+  <button type="button" class="like-btn">👍 Like <span class="like-count">-</span></button>
+  <span class="like-msg"></span>
+</div>
+
 <section class="card card-tight" id="post-nav">
   <h2 class="h2-tight">記事ナビ</h2>
   <ul class="simple">
@@ -48,3 +53,63 @@ header_lead: ""
 </section>
 
 <script src="{{ '/notes/post-nav.js' | relative_url }}"></script>
+
+<script>
+(() => {
+  const NAMESPACE = "konkaz-homepage"; // あなた固有。変えてOK（英数と-推奨）
+
+  async function apiGet(key) {
+    const res = await fetch(`https://api.countapi.xyz/get/${NAMESPACE}/${encodeURIComponent(key)}`);
+    if (!res.ok) throw new Error("get failed");
+    const data = await res.json();
+    return data.value ?? 0;
+  }
+
+  async function apiHit(key) {
+    const res = await fetch(`https://api.countapi.xyz/hit/${NAMESPACE}/${encodeURIComponent(key)}`);
+    if (!res.ok) throw new Error("hit failed");
+    const data = await res.json();
+    return data.value ?? 0;
+  }
+
+  document.querySelectorAll(".like[data-like-id]").forEach(async (box) => {
+    const id = box.getAttribute("data-like-id");
+    const key = `like:${id}`;
+    const storageKey = `liked:${id}`;
+
+    const btn = box.querySelector(".like-btn");
+    const countEl = box.querySelector(".like-count");
+    const msgEl = box.querySelector(".like-msg");
+
+    // 初期カウント表示
+    try {
+      countEl.textContent = await apiGet(key);
+    } catch {
+      countEl.textContent = "?";
+    }
+
+    // 既に押してたら無効化
+    if (localStorage.getItem(storageKey) === "1") {
+      btn.disabled = true;
+      btn.style.opacity = "0.6";
+      msgEl.textContent = "Thanks!";
+      return;
+    }
+
+    btn.addEventListener("click", async () => {
+      btn.disabled = true;
+      btn.style.opacity = "0.6";
+      try {
+        const newCount = await apiHit(key);
+        countEl.textContent = newCount;
+        localStorage.setItem(storageKey, "1");
+        msgEl.textContent = "Thanks!";
+      } catch {
+        btn.disabled = false;
+        btn.style.opacity = "1";
+        msgEl.textContent = "Failed";
+      }
+    });
+  });
+})();
+</script>
