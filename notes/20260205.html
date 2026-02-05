@@ -56,60 +56,66 @@ header_lead: ""
 
 <script>
 (() => {
-  const NAMESPACE = "konkaz-homepage"; // あなた固有。変えてOK（英数と-推奨）
+  const NAMESPACE = "konkaz-homepage"; // 固有。変えてOK（英数と-推奨）
 
-  async function apiGet(key) {
-    const res = await fetch(`https://api.countapi.xyz/get/${NAMESPACE}/${encodeURIComponent(key)}`);
-    if (!res.ok) throw new Error("get failed");
+  async function apiGetOrZero(key) {
+    const url = `https://api.countapi.xyz/get/${NAMESPACE}/${encodeURIComponent(key)}`;
+    const res = await fetch(url);
+    if (!res.ok) return 0; // 未作成などは0扱い
     const data = await res.json();
-    return data.value ?? 0;
+    return Number.isFinite(data.value) ? data.value : 0;
   }
 
   async function apiHit(key) {
-    const res = await fetch(`https://api.countapi.xyz/hit/${NAMESPACE}/${encodeURIComponent(key)}`);
+    const url = `https://api.countapi.xyz/hit/${NAMESPACE}/${encodeURIComponent(key)}`;
+    const res = await fetch(url);
     if (!res.ok) throw new Error("hit failed");
     const data = await res.json();
-    return data.value ?? 0;
+    return Number.isFinite(data.value) ? data.value : 0;
   }
 
-  document.querySelectorAll(".like[data-like-id]").forEach(async (box) => {
-    const id = box.getAttribute("data-like-id");
-    const key = `like:${id}`;
-    const storageKey = `liked:${id}`;
+  // DOMが確実に揃ってから動かす（レイアウトやscript位置変更にも強い）
+  window.addEventListener("DOMContentLoaded", async () => {
+    const boxes = document.querySelectorAll(".like[data-like-id]");
+    for (const box of boxes) {
+      const id = box.getAttribute("data-like-id");
+      if (!id) continue;
 
-    const btn = box.querySelector(".like-btn");
-    const countEl = box.querySelector(".like-count");
-    const msgEl = box.querySelector(".like-msg");
+      const key = `like:${id}`;
+      const storageKey = `liked:${id}`;
 
-    // 初期カウント表示
-    try {
-      countEl.textContent = await apiGet(key);
-    } catch {
-      countEl.textContent = "?";
-    }
+      const btn = box.querySelector(".like-btn");
+      const countEl = box.querySelector(".like-count");
+      const msgEl = box.querySelector(".like-msg");
 
-    // 既に押してたら無効化
-    if (localStorage.getItem(storageKey) === "1") {
-      btn.disabled = true;
-      btn.style.opacity = "0.6";
-      msgEl.textContent = "Thanks!";
-      return;
-    }
+      if (!btn || !countEl || !msgEl) continue;
 
-    btn.addEventListener("click", async () => {
-      btn.disabled = true;
-      btn.style.opacity = "0.6";
-      try {
-        const newCount = await apiHit(key);
-        countEl.textContent = newCount;
-        localStorage.setItem(storageKey, "1");
+      // 初期表示（未作成でも0）
+      countEl.textContent = await apiGetOrZero(key);
+
+      // 既に押してたら無効化
+      if (localStorage.getItem(storageKey) === "1") {
+        btn.disabled = true;
+        btn.style.opacity = "0.6";
         msgEl.textContent = "Thanks!";
-      } catch {
-        btn.disabled = false;
-        btn.style.opacity = "1";
-        msgEl.textContent = "Failed";
+        continue;
       }
-    });
+
+      btn.addEventListener("click", async () => {
+        btn.disabled = true;
+        btn.style.opacity = "0.6";
+        try {
+          const newCount = await apiHit(key);
+          countEl.textContent = newCount;
+          localStorage.setItem(storageKey, "1");
+          msgEl.textContent = "Thanks!";
+        } catch {
+          btn.disabled = false;
+          btn.style.opacity = "1";
+          msgEl.textContent = "Failed";
+        }
+      });
+    }
   });
 })();
 </script>
