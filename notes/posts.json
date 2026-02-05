@@ -26,5 +26,12 @@
     "url": "notes/20260125.html",
     "excerpt": "アクティブな休日を過ごしました",
     "tags": ["log", "private"]
+  },
+   {
+    "date": "2026-02-05",
+    "title": "いいねボタンを実装",
+    "url": "notes/20260205.html",
+    "excerpt": "いいねボタンを実装してみました",
+    "tags": ["log"]
   }
 ]
