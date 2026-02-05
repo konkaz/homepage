@@ -39,11 +39,6 @@ header_lead: ""
 
 </section>
 
-<div class="like" data-like-id="2026-02-05-post1">
-  <button type="button" class="like-btn">👍 Like <span class="like-count">-</span></button>
-  <span class="like-msg"></span>
-</div>
-
 <section class="card card-tight" id="post-nav">
   <h2 class="h2-tight">記事ナビ</h2>
   <ul class="simple">
@@ -55,63 +50,19 @@ header_lead: ""
 
 <script src="{{ '/notes/post-nav.js' | relative_url }}"></script>
 
-<script>
-(() => {
-  const NAMESPACE = "konkaz-homepage";
-
-  async function fetchJson(url) {
-    const res = await fetch(url, { cache: "no-store" });
-    const text = await res.text();
-    if (!res.ok) throw new Error(`${res.status} ${text.slice(0,120)}`);
-    try { return JSON.parse(text); } catch { throw new Error(`bad json: ${text.slice(0,120)}`); }
-  }
-
-  window.addEventListener("DOMContentLoaded", async () => {
-    const boxes = document.querySelectorAll(".like[data-like-id]");
-    for (const box of boxes) {
-      const id = box.getAttribute("data-like-id");
-      const key = `like:${id}`;
-      const storageKey = `liked:${id}`;
-
-      const btn = box.querySelector(".like-btn");
-      const countEl = box.querySelector(".like-count");
-      const msgEl = box.querySelector(".like-msg");
-
-      // 初期表示
-      try {
-        const url = `https://api.countapi.xyz/get/${NAMESPACE}/${encodeURIComponent(key)}`;
-        const data = await fetchJson(url);
-        countEl.textContent = (data.value ?? 0);
-        msgEl.textContent = "";
-      } catch (e) {
-        countEl.textContent = "?";
-        msgEl.textContent = String(e).slice(0, 60);
-      }
-
-      // 既に押してたら無効化
-      if (localStorage.getItem(storageKey) === "1") {
-        btn.disabled = true;
-        btn.style.opacity = "0.6";
-        msgEl.textContent = msgEl.textContent || "Thanks!";
-        continue;
-      }
-
-      btn.addEventListener("click", async () => {
-        btn.disabled = true;
-        btn.style.opacity = "0.6";
-        try {
-          const url = `https://api.countapi.xyz/hit/${NAMESPACE}/${encodeURIComponent(key)}`;
-          const data = await fetchJson(url);
-          countEl.textContent = (data.value ?? 0);
-          localStorage.setItem(storageKey, "1");
-          msgEl.textContent = "Thanks!";
-        } catch (e) {
-          btn.disabled = false;
-          btn.style.opacity = "1";
-          msgEl.textContent = String(e).slice(0, 60);
-        }
-      });
-    }
-  });
-})();
+<script src="https://giscus.app/client.js"
+        data-repo="konkaz/homepage"
+        data-repo-id="R_kgDOQ66eBw"
+        data-category="[カテゴリ名を記述]"
+        data-category-id="[カテゴリIDを記述]"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="ja"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
 </script>
