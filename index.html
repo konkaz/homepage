@@ -51,6 +51,19 @@ header_lead: |
 </section>
 
 <section class="card">
+  <h2>最新の投稿（ブログ風）</h2>
+  <div id="latest-posts">
+    <p class="sub">読み込み中…</p>
+  </div>
+  <noscript>
+    <p class="sub">
+      JavaScriptが無効のため、最新記事を表示できません。
+      <a href="{{ '/notes/' | relative_url }}">ブログ風</a>からご覧ください。
+    </p>
+  </noscript>
+</section>
+
+<section class="card">
   <h2>WEPPの解説・使い方</h2>
 
   <a href="{{ '/WEPP/' | relative_url }}" class="card-link-image">
@@ -66,19 +79,6 @@ header_lead: |
       </span>
     </div>
   </a>
-</section>
-
-<section class="card">
-  <h2>最新の投稿（ブログ風）</h2>
-  <div id="latest-posts">
-    <p class="sub">読み込み中…</p>
-  </div>
-  <noscript>
-    <p class="sub">
-      JavaScriptが無効のため、最新記事を表示できません。
-      <a href="{{ '/notes/' | relative_url }}">ブログ風</a>からご覧ください。
-    </p>
-  </noscript>
 </section>
 
 <script>
