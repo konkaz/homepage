@@ -1,0 +1,71 @@
+---
+layout: default
+title: "タイ留学その２｜ブログ風｜こんどうかずきの部屋"
+description: "タイ留学"
+og_title: "タイ留学その２"
+og_description: "タイ留学"
+header_lead: ""
+---
+
+<p class="sub breadcrumb">
+  <a href="{{ '/' | relative_url }}">Home</a> /
+  <a href="{{ '/notes/' | relative_url }}">ブログ風</a> /
+  タイ留学その２
+</p>
+
+<header class="post-header">
+  <h1 class="post-h1">タイ留学その２</h1>
+  <p class="sub post-meta">
+    公開日：2026-05-18
+    <span class="sep">/</span>
+    最終更新：2026-05-18
+    <span class="sep">/</span>
+    タグ：
+    <a href="{{ '/notes/?tag=log' | relative_url }}">log</a>,
+    <a href="{{ '/notes/?tag=private' | relative_url }}">Thailand</a>
+  </p>
+</header>
+
+<section class="card">
+
+<p>
+5月前半はちょっとした市内観光、フィールドトリップ、初めて海外で誕生日を迎えるなどいろいろありました。
+<br>5月頭の連休では、ICONSIAMやAsiatiqueなど、市街地南東方面の観光地をメインに訪問しました。タイ最大級のショッピングセンターであるICONSIAMはチャオプラヤ川沿いに建つ巨大なモールです。日本の建設会社が協力して作ったらしいです。その影響か、日本でもよく見かける店が多くありました。昼に食べたパッタイはなかなか良かったです。
+<br>Asiatiqueもまたチャオプラヤ川に面した施設です。タイの有名なビールブランドのChangがメインスポンサーを務めるそうで、観覧車にはロゴが描かれていました。ナイトマーケット的な場所なのか、たくさんの売店があり、日本語の客引きもたくさんいました。乗せられていろいろ買ってしまいました。
+<br>2度目のフィールドトリップはタイを飛び出してラオスはChampassakへ。現地の農家に対するワークショップのお手伝いをしてきました。ラオスでは道路に牛が歩いていたり、子供がバイクに乗っていたり、国境を超えるだけでタイとはかなり違った雰囲気でした。
+<br>ラオスから戻った日は誕生日でした。その日は現地の学生と一緒にホームセンターや建築資材店、パイプ屋や個人経営の電化製品屋などディープなところまで冒険してきました。おかげさまで、実験に必要な資材はある程度揃えることができました。夜はフィリピン人の友人のバイブル勉強会に招かれて、ケーキまで用意したお祝いをしてくれました。バイブルについてはほぼ初めて内容を見て難しいと感じましたが、世界を見据えて研究をしていくためにはこのような異文化への理解も重要だと感じました。
+
+</p>
+</section> <!-- 本文の card -->
+
+<section class="card card-tight">
+  <h2 class="h2-tight">リアクション・コメント</h2>
+
+  <script src="https://giscus.app/client.js"
+          data-repo="konkaz/homepage"
+          data-repo-id="R_kgDOQ66eBw"
+          data-category="Announcements"
+          data-category-id="DIC_kwDOQ66eB84C17L3"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme="preferred_color_scheme"
+          data-lang="ja"
+          data-loading="lazy"
+          crossorigin="anonymous"
+          async>
+  </script>
+</section>
+
+<section class="card card-tight" id="post-nav">
+  <h2 class="h2-tight">記事ナビ</h2>
+  <ul class="simple">
+    <li id="prev-item">← 前の記事：<span class="sub">（読み込み中）</span></li>
+    <li id="next-item">次の記事 →：<span class="sub">（読み込み中）</span></li>
+    <li>一覧に戻る：<a href="{{ '/notes/' | relative_url }}">ブログ風トップ</a></li>
+  </ul>
+</section>
+
+<script src="{{ '/notes/post-nav.js' | relative_url }}"></script>
