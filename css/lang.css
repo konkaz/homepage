@@ -6,11 +6,12 @@ html[data-lang="zh"] .lang-zh { display: revert !important; }
 html[data-lang="th"] .lang-th { display: revert !important; }
 html:not([data-lang="ja"]) .lang-nonja { display: revert !important; }
 
+.nav .nav-brand { margin-right: 0; }
 .lang-switch {
   display: inline-flex;
   align-items: center;
   gap: 0.2rem;
-  margin-left: 0.25rem;
+  margin-left: auto;
   padding: 0.18rem;
   border: 1px solid var(--line);
   border-radius: 999px;
@@ -33,7 +34,11 @@ html:not([data-lang="ja"]) .lang-nonja { display: revert !important; }
   color: #fff;
 }
 
+/* Keep the profile card minimal without a pseudo-logo. */
+.profile-mark { display: none; }
+.profile-title { margin-top: 0; }
+
 @media (max-width: 760px) {
-  .lang-switch { margin-left: 0; }
+  .lang-switch { margin-left: auto; }
   .lang-switch button { padding-inline: 0.42rem; }
 }
