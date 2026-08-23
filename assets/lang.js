@@ -1,12 +1,15 @@
 (() => {
   const root = document.documentElement;
-  const saved = localStorage.getItem('site-lang');
-  const initial = saved === 'en' ? 'en' : 'ja';
+  const supported = ['ja', 'en', 'zh', 'th'];
+
+  function normalize(lang) {
+    return supported.includes(lang) ? lang : 'ja';
+  }
 
   function setLang(lang) {
-    const next = lang === 'en' ? 'en' : 'ja';
+    const next = normalize(lang);
     root.dataset.lang = next;
-    root.lang = next;
+    root.lang = next === 'zh' ? 'zh-Hant' : next;
     localStorage.setItem('site-lang', next);
 
     document.querySelectorAll('[data-lang-switch]').forEach((button) => {
@@ -17,9 +20,15 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
+    let saved = 'ja';
+    try {
+      saved = normalize(localStorage.getItem('site-lang'));
+    } catch (e) {}
+
     document.querySelectorAll('[data-lang-switch]').forEach((button) => {
       button.addEventListener('click', () => setLang(button.dataset.langSwitch));
     });
-    setLang(initial);
+
+    setLang(saved);
   });
 })();
