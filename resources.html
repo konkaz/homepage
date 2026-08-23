@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Resources | Kazuki Kondo"
-description: "研究で使用しているデータ、モデル、ソフトウェア、Pythonライブラリと主要な解析フロー。"
+description: "研究で使用している主要な気象・気候データ、土壌侵食モデル、レーダー・雨滴解析ツール。"
 header_lead: ""
 ---
 
@@ -9,45 +9,51 @@ header_lead: ""
   <a href="{{ '/' | relative_url }}">Home</a> / Resources
 </p>
 
-<section class="card">
-  <p class="lang-ja">研究で使用しているデータ、モデル、解析環境をまとめています。</p>
-  <p class="lang-nonja">Data, models, software, and analysis tools used in my research.</p>
-</section>
+<p class="sub lang-ja">降雨観測から侵食モデル、将来予測まで、研究で使用している主要なデータとツールをまとめています。</p>
+<p class="sub lang-nonja">Key datasets and tools used in my research, from rainfall observations to erosion modelling and future projections.</p>
 
 <section class="card">
-  <h2 class="h2-tight">Data</h2>
+  <h2 class="h2-tight"><span class="lang-ja">気象・気候データ</span><span class="lang-nonja">Weather & climate data</span></h2>
   <ul class="simple">
     <li>
+      <strong><span class="lang-ja">気象庁二重偏波レーダー観測データ</span><span class="lang-nonja">JMA polarimetric weather-radar observations</span></strong>
+      — <span class="lang-ja">降雨粒子の特性や降雨エネルギーの推定に利用</span><span class="lang-nonja">used to estimate raindrop properties and rainfall energy</span>
+    </li>
+    <li>
+      <strong><span class="lang-ja">Disdrometer地上観測データ（Parsivel）</span><span class="lang-nonja">Ground-based disdrometer observations (Parsivel)</span></strong>
+      — <span class="lang-ja">雨滴粒径分布と降雨運動エネルギーの解析に利用</span><span class="lang-nonja">used to analyze drop size distributions and rainfall kinetic energy</span>
+    </li>
+    <li>
       <a href="https://www.miroc-gcm.jp/d4PDF/" target="_blank" rel="noopener">d4PDF</a>
-      — <span class="lang-ja">大規模アンサンブル気候データ</span><span class="lang-nonja">large-ensemble climate dataset</span>
+      — <span class="lang-ja">大規模アンサンブル将来気候予測データセット</span><span class="lang-nonja">large-ensemble climate-projection dataset</span>
     </li>
     <li>
       <a href="https://search.diasjp.net/ja/dataset/MLIT_XRAIN" target="_blank" rel="noopener">XRAIN</a>
-      — <span class="lang-ja">国土交通省の気象レーダー観測データ</span><span class="lang-nonja">weather-radar observations from MLIT, Japan</span>
+      — <span class="lang-ja">国土交通省の高解像度気象レーダー観測データ</span><span class="lang-nonja">high-resolution weather-radar observations from MLIT, Japan</span>
     </li>
-    <li>JMA radar / surface observation data — <span class="lang-ja">気象庁のレーダー・地上気象観測データ</span><span class="lang-nonja">radar and surface meteorological observations from JMA</span></li>
-    <li>Disdrometer observations — <span class="lang-ja">雨滴粒径分布の地上観測データ</span><span class="lang-nonja">ground observations of drop size distributions</span></li>
   </ul>
 </section>
 
 <section class="card">
-  <h2 class="h2-tight">Models & software</h2>
+  <h2 class="h2-tight"><span class="lang-ja">モデル・ソフトウェア</span><span class="lang-nonja">Models & software</span></h2>
   <ul class="simple">
     <li>
       <a href="https://www.nrcs.usda.gov/resources/tech-tools/water-erosion-prediction-project" target="_blank" rel="noopener">WEPP</a>
       — <span class="lang-ja">プロセスベースの土壌侵食予測モデル</span><span class="lang-nonja">process-based soil-erosion prediction model</span>
     </li>
-    <li>CLIGEN — <span class="lang-ja">WEPPで用いる確率的気象生成モデル</span><span class="lang-nonja">stochastic weather generator used with WEPP</span></li>
-    <li>SWAT / ArcSWAT — <span class="lang-ja">流域スケールの水文・物質動態モデル</span><span class="lang-nonja">watershed-scale hydrology and transport model</span></li>
     <li>
-      <a href="{{ '/WEPP/' | relative_url }}">WEPP notes</a>
-      — <span class="lang-ja">個人用・研究室向けの操作メモ</span><span class="lang-nonja">practical notes for using WEPP</span>
+      <strong>CLIGEN</strong>
+      — <span class="lang-ja">WEPPで用いる確率的気象生成モデル</span><span class="lang-nonja">stochastic weather generator used with WEPP</span>
+    </li>
+    <li>
+      <a href="https://www.ars.usda.gov/midwest-area/west-lafayette-in/national-soil-erosion-research/docs/wepp/bpcdg-install/" target="_blank" rel="noopener">BPCDG</a>
+      — <span class="lang-ja">観測気象データからWEPP用のbreakpoint climate dataを生成するツール</span><span class="lang-nonja">Breakpoint Climate Data Generator for creating WEPP climate input from observed weather data</span>
     </li>
   </ul>
 </section>
 
 <section class="card">
-  <h2 class="h2-tight">Python & analysis</h2>
+  <h2 class="h2-tight">Radar & DSD tools</h2>
   <ul class="simple">
     <li>
       <a href="https://arm-doe.github.io/pyart/" target="_blank" rel="noopener">Py-ART</a>
@@ -55,34 +61,11 @@ header_lead: ""
     </li>
     <li>
       <a href="https://github.com/ltelab/disdrodb" target="_blank" rel="noopener">DISDRODB</a>
-      — <span class="lang-ja">雨滴粒径分布データの標準化・解析</span><span class="lang-nonja">standardization and analysis of disdrometer data</span>
+      — <span class="lang-ja">Disdrometerデータの標準化・解析</span><span class="lang-nonja">standardization and analysis of disdrometer data</span>
     </li>
     <li>
       <a href="https://github.com/YuukiWada/PyXRAIN" target="_blank" rel="noopener">PyXRAIN</a>
       — <span class="lang-ja">XRAINデータ処理</span><span class="lang-nonja">XRAIN data processing</span>
-    </li>
-    <li>xarray · pandas · NumPy · Matplotlib — <span class="lang-ja">データ処理・統計解析・可視化</span><span class="lang-nonja">data processing, statistical analysis, and visualization</span></li>
-    <li>Jupyter Notebook / JupyterLab · conda — <span class="lang-ja">解析環境</span><span class="lang-nonja">analysis environment</span></li>
-  </ul>
-</section>
-
-<section class="card">
-  <h2 class="h2-tight">Research workflows</h2>
-  <ul class="simple">
-    <li>
-      <strong>Rainfall observation → erosivity</strong><br>
-      <span class="sub lang-ja">雨滴径分布から降雨運動エネルギーを評価し、土壌侵食との関係を解析。</span>
-      <span class="sub lang-nonja">Estimate rainfall kinetic energy from drop size distributions and analyze its relationship with soil erosion.</span>
-    </li>
-    <li>
-      <strong>Weather radar → spatial rainfall properties</strong><br>
-      <span class="sub lang-ja">二重偏波レーダーと地上観測を組み合わせ、侵食に関わる降雨特性を面的に推定。</span>
-      <span class="sub lang-nonja">Combine polarimetric radar and surface observations to estimate erosion-relevant rainfall properties spatially.</span>
-    </li>
-    <li>
-      <strong>Climate data → CLIGEN → WEPP</strong><br>
-      <span class="sub lang-ja">将来気候データから降雨特性を生成し、土壌侵食リスクの将来変化を評価。</span>
-      <span class="sub lang-nonja">Generate rainfall characteristics from future-climate data and assess changes in future soil-erosion risk.</span>
     </li>
   </ul>
 </section>
