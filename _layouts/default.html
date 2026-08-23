@@ -21,9 +21,9 @@
   <script>
     try {
       const savedLang = localStorage.getItem('site-lang');
-      if (savedLang === 'en') {
-        document.documentElement.dataset.lang = 'en';
-        document.documentElement.lang = 'en';
+      if (['ja', 'en', 'zh', 'th'].includes(savedLang)) {
+        document.documentElement.dataset.lang = savedLang;
+        document.documentElement.lang = savedLang === 'zh' ? 'zh-Hant' : savedLang;
       }
     } catch (e) {}
   </script>
