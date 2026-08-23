@@ -11,7 +11,7 @@ html:not([data-lang="ja"]) .lang-nonja { display: revert !important; }
   display: inline-flex;
   align-items: center;
   gap: 0.2rem;
-  margin-left: auto;
+  margin-left: 0.35rem;
   padding: 0.18rem;
   border: 1px solid var(--line);
   border-radius: 999px;
@@ -34,11 +34,24 @@ html:not([data-lang="ja"]) .lang-nonja { display: revert !important; }
   color: #fff;
 }
 
+.nav-links {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 1.35rem;
+}
+
 /* Keep the profile card minimal without a pseudo-logo. */
 .profile-mark { display: none; }
 .profile-title { margin-top: 0; }
 
 @media (max-width: 760px) {
-  .lang-switch { margin-left: auto; }
+  .lang-switch { margin-left: 0; }
   .lang-switch button { padding-inline: 0.42rem; }
+  .nav-links {
+    width: 100%;
+    margin-left: 0;
+    gap: 0.8rem 1rem;
+    flex-wrap: wrap;
+  }
 }
