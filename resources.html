@@ -1,0 +1,71 @@
+---
+layout: default
+title: "Resources | Kazuki Kondo"
+description: "研究で使用しているデータ、モデル、ソフトウェア、Pythonライブラリと主要な解析フロー。"
+header_lead: "研究で使用しているデータ、モデル、解析環境をまとめています。"
+---
+
+<p class="sub breadcrumb">
+  <a href="{{ '/' | relative_url }}">Home</a> / Resources
+</p>
+
+<section class="card">
+  <h2 class="h2-tight">Data</h2>
+  <ul class="simple">
+    <li>
+      <a href="https://www.miroc-gcm.jp/d4PDF/" target="_blank" rel="noopener">d4PDF</a>
+      — 大規模アンサンブル気候データ
+    </li>
+    <li>
+      <a href="https://search.diasjp.net/ja/dataset/MLIT_XRAIN" target="_blank" rel="noopener">XRAIN</a>
+      — 国土交通省の気象レーダー観測データ
+    </li>
+    <li>JMA radar / surface observation data — 気象庁のレーダー・地上気象観測データ</li>
+    <li>Disdrometer observations — 雨滴粒径分布の地上観測データ</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2 class="h2-tight">Models & software</h2>
+  <ul class="simple">
+    <li>
+      <a href="https://www.nrcs.usda.gov/resources/tech-tools/water-erosion-prediction-project" target="_blank" rel="noopener">WEPP</a>
+      — プロセスベースの土壌侵食予測モデル
+    </li>
+    <li>CLIGEN — WEPPで用いる確率的気象生成モデル</li>
+    <li>SWAT / ArcSWAT — 流域スケールの水文・物質動態モデル</li>
+    <li>
+      <a href="{{ '/WEPP/' | relative_url }}">WEPP notes</a>
+      — 個人用・研究室向けの操作メモ
+    </li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2 class="h2-tight">Python & analysis</h2>
+  <ul class="simple">
+    <li>
+      <a href="https://arm-doe.github.io/pyart/" target="_blank" rel="noopener">Py-ART</a>
+      — 気象レーダーデータの読み込み・解析
+    </li>
+    <li>
+      <a href="https://github.com/ltelab/disdrodb" target="_blank" rel="noopener">DISDRODB</a>
+      — 雨滴粒径分布データの標準化・解析
+    </li>
+    <li>
+      <a href="https://github.com/YuukiWada/PyXRAIN" target="_blank" rel="noopener">PyXRAIN</a>
+      — XRAINデータ処理
+    </li>
+    <li>xarray · pandas · NumPy · Matplotlib — データ処理・統計解析・可視化</li>
+    <li>Jupyter Notebook / JupyterLab · conda — 解析環境</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2 class="h2-tight">Research workflows</h2>
+  <ul class="simple">
+    <li><strong>Rainfall observation → erosivity</strong><br><span class="sub">雨滴径分布から降雨運動エネルギーを評価し、土壌侵食との関係を解析。</span></li>
+    <li><strong>Weather radar → spatial rainfall properties</strong><br><span class="sub">二重偏波レーダーと地上観測を組み合わせ、侵食に関わる降雨特性を面的に推定。</span></li>
+    <li><strong>Climate data → CLIGEN → WEPP</strong><br><span class="sub">将来気候データから降雨特性を生成し、土壌侵食リスクの将来変化を評価。</span></li>
+  </ul>
+</section>
