@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" data-lang="ja">
 <head>
   {% assign og_img = site.og_image | default: "/assets/ogp.png" %}
 
@@ -17,6 +17,16 @@
   <meta name="theme-color" content="#f4f6f2">
 
   {% include head.html %}
+  <link rel="stylesheet" href="{{ '/css/lang.css' | relative_url }}" />
+  <script>
+    try {
+      const savedLang = localStorage.getItem('site-lang');
+      if (savedLang === 'en') {
+        document.documentElement.dataset.lang = 'en';
+        document.documentElement.lang = 'en';
+      }
+    } catch (e) {}
+  </script>
 </head>
 <body>
   {% include nav.html %}
@@ -37,5 +47,7 @@
   <footer class="footer">
     © {{ site.time | date: "%Y" }} Kazuki Kondo · Soil erosion × Rainfall × Climate
   </footer>
+
+  <script src="{{ '/assets/lang.js' | relative_url }}"></script>
 </body>
 </html>
