@@ -7,11 +7,17 @@ html[data-lang="th"] .lang-th { display: revert !important; }
 html:not([data-lang="ja"]) .lang-nonja { display: revert !important; }
 
 .nav .nav-brand { margin-right: 0; }
+.nav-links {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 1.35rem;
+}
 .lang-switch {
   display: inline-flex;
   align-items: center;
   gap: 0.2rem;
-  margin-left: 0.35rem;
+  margin-left: 0.7rem;
   padding: 0.18rem;
   border: 1px solid var(--line);
   border-radius: 999px;
@@ -34,21 +40,34 @@ html:not([data-lang="ja"]) .lang-nonja { display: revert !important; }
   color: #fff;
 }
 
-.nav-links {
-  margin-left: auto;
-  display: inline-flex;
-  align-items: center;
-  gap: 1.35rem;
-}
-
 /* Keep the profile card minimal without a pseudo-logo. */
 .profile-mark { display: none; }
 .profile-title { margin-top: 0; }
 
+/* Research-card hierarchy: field first, theme second, body third. */
+.research-field {
+  margin: 0 0 0.7rem !important;
+  color: var(--accent);
+  font-size: 1.22rem;
+  font-weight: 850;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+.research-card h3 {
+  margin: 0 0 0.75rem !important;
+  font-size: 1.08rem !important;
+  line-height: 1.45;
+}
+
 @media (max-width: 760px) {
-  .lang-switch { margin-left: 0; }
+  .nav-brand { order: 1; }
+  .lang-switch {
+    order: 2;
+    margin-left: auto;
+  }
   .lang-switch button { padding-inline: 0.42rem; }
   .nav-links {
+    order: 3;
     width: 100%;
     margin-left: 0;
     gap: 0.8rem 1rem;
