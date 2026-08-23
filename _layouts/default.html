@@ -1,39 +1,53 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" data-lang="ja">
 <head>
   {% assign og_img = site.og_image | default: "/assets/ogp.png" %}
 
-<meta property="og:type" content="website" />
-<meta property="og:title" content="{{ page.og_title | default: page.title | default: site.title }}" />
-<meta property="og:description" content="{{ page.og_description | default: page.description | default: site.description }}" />
-<meta property="og:image" content="{{ og_img | absolute_url }}" />
-<meta property="og:locale" content="ja_JP" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="{{ page.og_title | default: page.title | default: site.title }}" />
+  <meta property="og:description" content="{{ page.og_description | default: page.description | default: site.description }}" />
+  <meta property="og:image" content="{{ og_img | absolute_url }}" />
+  <meta property="og:locale" content="ja_JP" />
 
-  <!-- Home screen (use ogp.png) -->
-<link rel="apple-touch-icon" href="{{ site.og_image | relative_url }}">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="{{ site.title }}">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-
-<link rel="manifest" href="{{ '/manifest.webmanifest' | relative_url }}">
-<meta name="theme-color" content="#111827">
+  <link rel="apple-touch-icon" href="{{ site.og_image | relative_url }}">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="{{ site.title }}">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="manifest" href="{{ '/manifest.webmanifest' | relative_url }}">
+  <meta name="theme-color" content="#f4f6f2">
 
   {% include head.html %}
+  <link rel="stylesheet" href="{{ '/css/lang.css' | relative_url }}" />
+  <script>
+    try {
+      const savedLang = localStorage.getItem('site-lang');
+      if (['ja', 'en', 'zh', 'th'].includes(savedLang)) {
+        document.documentElement.dataset.lang = savedLang;
+        document.documentElement.lang = savedLang === 'zh' ? 'zh-Hant' : savedLang;
+      }
+    } catch (e) {}
+  </script>
 </head>
 <body>
   {% include nav.html %}
 
+  {% unless page.hero %}
   <header class="header">
-    <h1>{{ site.title }}</h1>
+    <h1>{{ page.title | default: site.title }}</h1>
     {% if page.header_lead %}
       <p>{{ page.header_lead | newline_to_br }}</p>
     {% endif %}
   </header>
+  {% endunless %}
 
   <main class="container">
     {{ content }}
   </main>
 
-  <footer class="footer">© {{ site.time | date: "%Y" }}</footer>
+  <footer class="footer">
+    © {{ site.time | date: "%Y" }} Kazuki Kondo · Soil erosion × Rainfall × Climate
+  </footer>
+
+  <script src="{{ '/assets/lang.js' | relative_url }}"></script>
 </body>
 </html>

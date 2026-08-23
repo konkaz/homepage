@@ -1,7 +1,17 @@
-<nav class="nav" aria-label="サイト内ナビゲーション">
-  <a href="{{ '/' | relative_url }}">Home</a>
-  <a href="{{ '/cv.html' | relative_url }}">経歴</a>
-  <a href="{{ '/publications.html' | relative_url }}">業績</a>
-  <a href="{{ '/notes/' | relative_url }}">ブログ風</a>
-  <a href="{{ '/other.html' | relative_url }}">その他</a>
-</nav>
+<div class="nav-shell">
+  <nav class="nav" aria-label="サイト内ナビゲーション">
+    <a class="nav-brand" href="{{ '/' | relative_url }}">KAZUKI KONDO</a>
+    <a href="{{ '/' | relative_url }}">Home</a>
+    <a href="{{ '/resources.html' | relative_url }}">
+      <span class="lang-ja">使用データ・ツール</span><span class="lang-nonja">Resources</span>
+    </a>
+    <a href="{{ '/notes/' | relative_url }}">Notes</a>
+    <a href="{{ site.researchmap_url }}" target="_blank" rel="noopener">Researchmap ↗</a>
+    <div class="lang-switch" aria-label="Language">
+      <button type="button" data-lang-switch="ja" aria-pressed="true">JA</button>
+      <button type="button" data-lang-switch="en" aria-pressed="false">EN</button>
+      <button type="button" data-lang-switch="zh" aria-pressed="false">中文</button>
+      <button type="button" data-lang-switch="th" aria-pressed="false">ไทย</button>
+    </div>
+  </nav>
+</div>

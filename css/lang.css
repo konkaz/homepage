@@ -1,0 +1,39 @@
+/* Homepage language visibility */
+.lang-ja, .lang-en, .lang-zh, .lang-th, .lang-nonja { display: none !important; }
+html[data-lang="ja"] .lang-ja { display: revert !important; }
+html[data-lang="en"] .lang-en { display: revert !important; }
+html[data-lang="zh"] .lang-zh { display: revert !important; }
+html[data-lang="th"] .lang-th { display: revert !important; }
+html:not([data-lang="ja"]) .lang-nonja { display: revert !important; }
+
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  margin-left: 0.25rem;
+  padding: 0.18rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.72);
+}
+.lang-switch button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 0.28rem 0.48rem;
+  font: inherit;
+  font-size: 0.74rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+.lang-switch button.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+@media (max-width: 760px) {
+  .lang-switch { margin-left: 0; }
+  .lang-switch button { padding-inline: 0.42rem; }
+}
