@@ -47,6 +47,13 @@
   </main>
 
   <footer class="footer" style="text-align: center;">
+    {% if page.hero %}
+    <div style="margin-bottom: 0.55rem; font-size: 0.82rem; letter-spacing: 0.02em;">
+      <a href="https://www.instagram.com/kndoookzk?igsi=MWk3a3FycTBxNXRzaA%3D%3D&utm_source=qr" target="_blank" rel="noopener" style="color: inherit;">Instagram</a>
+      <span style="margin: 0 0.55rem; opacity: 0.55;">·</span>
+      <a href="https://strava.app.link/KDRTN9OzR5b" target="_blank" rel="noopener" style="color: inherit;">Strava</a>
+    </div>
+    {% endif %}
     © {{ site.time | date: "%Y" }} KONDO KAZUKI
   </footer>
 
