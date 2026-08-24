@@ -5,3 +5,6 @@ description: "Soil erosion, rainfall physics, weather radar and climate-change r
 researchmap_url: "https://researchmap.jp/kazuki-kondo"
 ga_measurement_id: "G-6DTS5ZTWHJ"
 og_image: /assets/ogp.png
+
+exclude:
+  - archive
