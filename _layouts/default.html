@@ -42,13 +42,9 @@
   </header>
   {% endunless %}
 
-  <main class="container">
+  <main class="container"{% if page.hero %} style="padding-bottom: 2rem;"{% endif %}>
     {{ content }}
   </main>
-
-  <footer class="footer">
-    © {{ site.time | date: "%Y" }} Kazuki Kondo · Soil erosion × Rainfall × Climate
-  </footer>
 
   <script src="{{ '/assets/lang.js' | relative_url }}"></script>
 </body>
