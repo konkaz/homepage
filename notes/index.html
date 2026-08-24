@@ -5,32 +5,22 @@ description: "研究・フィールドワーク・海外滞在・日々の活動
 header_lead: ""
 ---
 
-<p class="sub">研究、フィールドワーク、海外滞在、日々の活動。</p>
+<p class="sub lang-ja">研究、フィールドワーク、海外滞在、日々の活動。</p>
+<p class="sub lang-nonja">Research, fieldwork, international stays, and everyday activities.</p>
 
 <section class="card">
-  <h2>記事一覧</h2>
+  <h2><span class="lang-ja">記事一覧</span><span class="lang-nonja">Posts</span></h2>
 
   <div class="notes-controls">
-    <input
-      id="search"
-      type="search"
-      placeholder="検索（タイトル / キーワード / タグ）"
-      class="notes-search"
-    />
+    <input id="search" type="search" class="notes-search" />
     <div id="status" class="sub notes-status"></div>
   </div>
 
   <div id="tags" class="notes-tags"></div>
 
-  <div id="posts">
-    <p class="sub">読み込み中…</p>
-  </div>
+  <div id="posts"><p class="sub">Loading…</p></div>
 
-  <noscript>
-    <p class="sub">
-      JavaScriptが無効のため一覧を生成できません。posts.json を有効にするには JavaScript をONにしてください。
-    </p>
-  </noscript>
+  <noscript><p class="sub">JavaScript is required to display the post list.</p></noscript>
 </section>
 
 <script>
@@ -42,167 +32,83 @@ header_lead: ""
   let ALL_POSTS = [];
   let ACTIVE_TAG = null;
 
-  function toTime(dateStr) {
-    const t = Date.parse(dateStr);
-    return Number.isFinite(t) ? t : 0;
-  }
-
-  function safeText(v) {
-    return (v === null || v === undefined) ? "" : String(v);
-  }
-
-  function normalizeUrl(url) {
-    return safeText(url).replace(/^notes\//, "");
-  }
-
-  function getYear(dateStr) {
-    const m = safeText(dateStr).match(/^(\d{4})/);
-    return m ? m[1] : "Unknown";
-  }
-
-  function collectTags(posts) {
-    const s = new Set();
-    posts.forEach(p => (p.tags || []).forEach(t => s.add(t)));
-    return Array.from(s).sort((a,b) => a.localeCompare(b, "ja"));
-  }
+  function isJapanese() { return document.documentElement.dataset.lang === "ja"; }
+  function toTime(dateStr) { const t = Date.parse(dateStr); return Number.isFinite(t) ? t : 0; }
+  function safeText(v) { return (v === null || v === undefined) ? "" : String(v); }
+  function normalizeUrl(url) { return safeText(url).replace(/^notes\//, ""); }
+  function getYear(dateStr) { const m = safeText(dateStr).match(/^(\d{4})/); return m ? m[1] : "Unknown"; }
+  function collectTags(posts) { const s = new Set(); posts.forEach(p => (p.tags || []).forEach(t => s.add(t))); return Array.from(s).sort((a,b) => a.localeCompare(b, "ja")); }
 
   function updateTagQuery() {
     const url = new URL(window.location.href);
-    if (ACTIVE_TAG) {
-      url.searchParams.set("tag", ACTIVE_TAG);
-    } else {
-      url.searchParams.delete("tag");
-    }
+    if (ACTIVE_TAG) url.searchParams.set("tag", ACTIVE_TAG); else url.searchParams.delete("tag");
     history.replaceState(null, "", url);
   }
 
   function renderTags(allTags) {
     tagsBox.innerHTML = "";
-
     function chip(label, tagValue) {
       const b = document.createElement("button");
-      b.type = "button";
-      b.textContent = label;
-      b.className = "tag-chip" + ((ACTIVE_TAG === tagValue) ? " active" : "");
-      b.addEventListener("click", () => {
-        ACTIVE_TAG = (ACTIVE_TAG === tagValue) ? null : tagValue;
-        updateTagQuery();
-        renderTags(allTags);
-        render();
-      });
+      b.type = "button"; b.textContent = label; b.className = "tag-chip" + ((ACTIVE_TAG === tagValue) ? " active" : "");
+      b.addEventListener("click", () => { ACTIVE_TAG = (ACTIVE_TAG === tagValue) ? null : tagValue; updateTagQuery(); renderTags(allTags); render(); });
       return b;
     }
-
-    tagsBox.appendChild(chip("すべて", null));
+    tagsBox.appendChild(chip(isJapanese() ? "すべて" : "All", null));
     allTags.forEach(t => tagsBox.appendChild(chip(t, t)));
   }
 
   function filterPosts(posts) {
     const key = safeText(searchInput.value).trim().toLowerCase();
-
     return posts.filter(p => {
       const title = safeText(p.title).toLowerCase();
       const excerpt = safeText(p.excerpt).toLowerCase();
       const tags = (p.tags || []).map(x => safeText(x).toLowerCase()).join(" ");
-
-      const hitKeyword = !key || (title + " " + excerpt + " " + tags).includes(key);
-      const hitTag = !ACTIVE_TAG || (p.tags || []).includes(ACTIVE_TAG);
-
-      return hitKeyword && hitTag;
+      return (!key || (title + " " + excerpt + " " + tags).includes(key)) && (!ACTIVE_TAG || (p.tags || []).includes(ACTIVE_TAG));
     });
   }
 
   function postItem(p) {
-    const article = document.createElement("article");
-    article.className = "post-item";
-
-    const h3 = document.createElement("h3");
-    h3.className = "post-title";
-
-    const a = document.createElement("a");
-    a.href = normalizeUrl(p.url);
-    a.textContent = safeText(p.title) || "(no title)";
-    h3.appendChild(a);
-
-    const meta = document.createElement("p");
-    meta.className = "sub";
-    const tagText = (p.tags && p.tags.length) ? " / " + p.tags.join(", ") : "";
-    meta.textContent = safeText(p.date) + tagText;
-
-    article.appendChild(h3);
-    article.appendChild(meta);
-    return article;
+    const article = document.createElement("article"); article.className = "post-item";
+    const h3 = document.createElement("h3"); h3.className = "post-title";
+    const a = document.createElement("a"); a.href = normalizeUrl(p.url); a.textContent = safeText(p.title) || "(no title)"; h3.appendChild(a);
+    const meta = document.createElement("p"); meta.className = "sub";
+    meta.textContent = safeText(p.date) + ((p.tags && p.tags.length) ? " / " + p.tags.join(", ") : "");
+    article.appendChild(h3); article.appendChild(meta); return article;
   }
 
   function render() {
-    const filtered = filterPosts(ALL_POSTS);
-
-    const key = safeText(searchInput.value).trim();
-    const tagInfo = ACTIVE_TAG ? ` / tag: ${ACTIVE_TAG}` : "";
-    statusBox.textContent =
-      `全 ${ALL_POSTS.length} 件` +
-      (filtered.length !== ALL_POSTS.length ? ` → 表示 ${filtered.length} 件` : "") +
-      (key ? ` / 検索: "${key}"` : "") +
-      tagInfo;
-
-    postsBox.innerHTML = "";
-
-    if (filtered.length === 0) {
-      const p = document.createElement("p");
-      p.className = "sub";
-      p.textContent = "該当する記事がありません。";
-      postsBox.appendChild(p);
-      return;
+    const filtered = filterPosts(ALL_POSTS); const key = safeText(searchInput.value).trim();
+    if (isJapanese()) {
+      statusBox.textContent = `全 ${ALL_POSTS.length} 件` + (filtered.length !== ALL_POSTS.length ? ` → 表示 ${filtered.length} 件` : "") + (key ? ` / 検索: "${key}"` : "") + (ACTIVE_TAG ? ` / tag: ${ACTIVE_TAG}` : "");
+    } else {
+      statusBox.textContent = `${ALL_POSTS.length} posts` + (filtered.length !== ALL_POSTS.length ? ` → ${filtered.length} shown` : "") + (key ? ` / Search: "${key}"` : "") + (ACTIVE_TAG ? ` / tag: ${ACTIVE_TAG}` : "");
     }
-
+    postsBox.innerHTML = "";
+    if (filtered.length === 0) { const p = document.createElement("p"); p.className = "sub"; p.textContent = isJapanese() ? "該当する記事がありません。" : "No matching posts."; postsBox.appendChild(p); return; }
     let currentYear = null;
-    filtered.forEach(p => {
-      const y = getYear(p.date);
-      if (y !== currentYear) {
-        currentYear = y;
-        const h = document.createElement("h2");
-        h.textContent = currentYear;
-        h.className = "notes-year";
-        postsBox.appendChild(h);
-      }
-      postsBox.appendChild(postItem(p));
-    });
+    filtered.forEach(p => { const y = getYear(p.date); if (y !== currentYear) { currentYear = y; const h = document.createElement("h2"); h.textContent = currentYear; h.className = "notes-year"; postsBox.appendChild(h); } postsBox.appendChild(postItem(p)); });
   }
+
+  function refreshLanguageUI() {
+    searchInput.placeholder = isJapanese() ? "検索（タイトル / キーワード / タグ）" : "Search (title / keyword / tag)";
+    if (ALL_POSTS.length) { renderTags(collectTags(ALL_POSTS)); render(); }
+  }
+
+  new MutationObserver(refreshLanguageUI).observe(document.documentElement, { attributes: true, attributeFilter: ["data-lang"] });
+  refreshLanguageUI();
 
   (async () => {
     try {
       const res = await fetch("{{ '/notes/posts.json' | relative_url }}", { cache: "no-store" });
       if (!res.ok) throw new Error("posts.json not found");
-
-      const posts = await res.json();
-      if (!Array.isArray(posts)) throw new Error("posts.json format invalid");
-
-      posts.forEach(p => {
-        if (!p.tags) p.tags = [];
-        p.url = normalizeUrl(p.url);
-      });
-      posts.sort((a, b) => toTime(b.date) - toTime(a.date));
-
+      const posts = await res.json(); if (!Array.isArray(posts)) throw new Error("posts.json format invalid");
+      posts.forEach(p => { if (!p.tags) p.tags = []; p.url = normalizeUrl(p.url); }); posts.sort((a, b) => toTime(b.date) - toTime(a.date));
       ALL_POSTS = posts;
-
-      const allTags = collectTags(ALL_POSTS);
-      const requestedTag = new URLSearchParams(window.location.search).get("tag");
-      if (requestedTag && allTags.includes(requestedTag)) {
-        ACTIVE_TAG = requestedTag;
-      }
-      renderTags(allTags);
-
-      render();
-      searchInput.addEventListener("input", render);
-
+      const allTags = collectTags(ALL_POSTS); const requestedTag = new URLSearchParams(window.location.search).get("tag"); if (requestedTag && allTags.includes(requestedTag)) ACTIVE_TAG = requestedTag;
+      renderTags(allTags); render(); searchInput.addEventListener("input", render);
     } catch (e) {
-      postsBox.innerHTML = "";
-      tagsBox.innerHTML = "";
-      statusBox.textContent = "";
-      const p = document.createElement("p");
-      p.className = "sub";
-      p.textContent = "読み込みに失敗しました（/notes/posts.json を確認してください）。";
-      postsBox.appendChild(p);
+      postsBox.innerHTML = ""; tagsBox.innerHTML = ""; statusBox.textContent = "";
+      const p = document.createElement("p"); p.className = "sub"; p.textContent = isJapanese() ? "読み込みに失敗しました。" : "Failed to load posts."; postsBox.appendChild(p);
     }
   })();
 </script>
