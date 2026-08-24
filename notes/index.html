@@ -14,21 +14,18 @@ header_lead: ""
 <section class="card">
   <h2>記事一覧</h2>
 
-  <!-- controls -->
   <div class="notes-controls">
     <input
       id="search"
       type="search"
-      placeholder="検索（タイトル / 要約 / タグ）"
+      placeholder="検索（タイトル / キーワード / タグ）"
       class="notes-search"
     />
     <div id="status" class="sub notes-status"></div>
   </div>
 
-  <!-- tag chips -->
   <div id="tags" class="notes-tags"></div>
 
-  <!-- posts -->
   <div id="posts">
     <p class="sub">読み込み中…</p>
   </div>
@@ -59,7 +56,6 @@ header_lead: ""
   }
 
   function normalizeUrl(url) {
-    // notes配下なので "notes/xxxx.html" でも "xxxx.html" でも吸収
     return safeText(url).replace(/^notes\//, "");
   }
 
@@ -139,14 +135,6 @@ header_lead: ""
 
     article.appendChild(h3);
     article.appendChild(meta);
-
-    if (p.excerpt) {
-      const ex = document.createElement("p");
-      ex.className = "post-excerpt";
-      ex.textContent = safeText(p.excerpt);
-      article.appendChild(ex);
-    }
-
     return article;
   }
 
