@@ -28,13 +28,6 @@
     "tags": ["Sports"]
   },
   {
-    "date": "2026-02-05",
-    "title": "リアクション機能を実装",
-    "url": "notes/20260205.html",
-    "excerpt": "リアクション機能を実装してみました",
-    "tags": ["Website"]
-  },
-  {
     "date": "2026-02-10",
     "title": "魚沼国際雪合戦",
     "url": "notes/20260210.html",
@@ -98,17 +91,10 @@
     "tags": ["Thailand", "Research"]
   },
   {
-    "date": "2026-08-02",
-    "title": "いざ台湾へ",
-    "url": "notes/20260802.html",
-    "excerpt": "国立台湾大学での2週間の短期滞在が始まります",
-    "tags": ["Taiwan", "Research"]
-  },
-  {
     "date": "2026-08-09",
     "title": "NTU Week 1",
     "url": "notes/20260809.html",
-    "excerpt": "SWATの学習と台北での1週間",
+    "excerpt": "国立台湾大学での短期滞在1週目。SWATの学習と台北での生活",
     "tags": ["Taiwan", "Research"]
   },
   {
