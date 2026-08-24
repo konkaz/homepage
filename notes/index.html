@@ -74,6 +74,16 @@ header_lead: ""
     return Array.from(s).sort((a,b) => a.localeCompare(b, "ja"));
   }
 
+  function updateTagQuery() {
+    const url = new URL(window.location.href);
+    if (ACTIVE_TAG) {
+      url.searchParams.set("tag", ACTIVE_TAG);
+    } else {
+      url.searchParams.delete("tag");
+    }
+    history.replaceState(null, "", url);
+  }
+
   function renderTags(allTags) {
     tagsBox.innerHTML = "";
 
@@ -84,6 +94,7 @@ header_lead: ""
       b.className = "tag-chip" + ((ACTIVE_TAG === tagValue) ? " active" : "");
       b.addEventListener("click", () => {
         ACTIVE_TAG = (ACTIVE_TAG === tagValue) ? null : tagValue;
+        updateTagQuery();
         renderTags(allTags);
         render();
       });
@@ -191,6 +202,10 @@ header_lead: ""
       ALL_POSTS = posts;
 
       const allTags = collectTags(ALL_POSTS);
+      const requestedTag = new URLSearchParams(window.location.search).get("tag");
+      if (requestedTag && allTags.includes(requestedTag)) {
+        ACTIVE_TAG = requestedTag;
+      }
       renderTags(allTags);
 
       render();
