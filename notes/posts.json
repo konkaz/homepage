@@ -7,20 +7,6 @@
     "tags": ["Website"]
   },
   {
-    "date": "2026-01-18",
-    "title": "WEPPの解説記事",
-    "url": "notes/20260118.html",
-    "excerpt": "WEPPの使い方解説を作っていきます",
-    "tags": ["Research"]
-  },
-  {
-    "date": "2026-01-22",
-    "title": "d4PDFをWEPPで…",
-    "url": "notes/20260122.html",
-    "excerpt": "WEPPにd4PDFのデータを突っ込む方法を模索中",
-    "tags": ["Research"]
-  },
-  {
     "date": "2026-01-25",
     "title": "アクティブな休日",
     "url": "notes/20260125.html",
