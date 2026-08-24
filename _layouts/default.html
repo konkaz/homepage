@@ -42,7 +42,7 @@
   </header>
   {% endunless %}
 
-  <main class="container"{% if page.hero %} style="padding-bottom: 2rem;"{% endif %}>
+  <main class="container"{% if page.hero %} style="padding-bottom: 2rem;"{% else %} style="padding-top: 0.5rem;"{% endif %}>
     {{ content }}
   </main>
 
